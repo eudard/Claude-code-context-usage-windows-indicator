@@ -106,15 +106,7 @@ You can test the script manually to verify it works:
 
 ### Expected Output
 
-```
-Color Scale Demo (showing range with midpoint value):
-
-  0-  9%: ████████████████████████████████████████████████████
- 10- 19%: ████████████████████████████████████████████████████
- 20- 29%: ████████████████████████████████████████████████████
- ...
- 90-100%: ████████████████████████████████████████████████████
-```
+![expected results](https://github.com/eudard/Claude-code-context-usage-windows-indicator/blob/98d6011c92e9deb17d4824c4039f3584a0713872/progress.jpg)
 
 The bars should show a gradient from dark green (0%) to red (100%).
 
