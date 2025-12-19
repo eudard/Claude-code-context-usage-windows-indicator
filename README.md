@@ -21,19 +21,36 @@ A PowerShell statusline script extension for Claude Code that displays context u
 
 ## Installation
 
-### Step 1: Copy the script to Claude's config directory
+### Step 1: Download the script
+
+1. Download `simple-statusline.ps1` from this repository
+2. Save it somewhere you can find it (like your Downloads folder)
+
+### Step 2: Open PowerShell
+
+1. Press `Windows Key + X` on your keyboard
+2. Click **"Windows PowerShell"** or **"Terminal"** from the menu
+3. A window with text will open - this is PowerShell
+
+### Step 3: Copy the script to the right place
+
+Copy and paste these commands into PowerShell **one at a time**, pressing Enter after each:
 
 ```powershell
-# Create the config directory if it doesn't exist
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude"
-
-# Copy the script (adjust source path as needed)
-Copy-Item "simple-statusline.ps1" "$env:USERPROFILE\.claude\"
 ```
 
-### Step 2: Fix file encoding
+This creates a folder called `.claude` in your user folder.
 
-The script uses Unicode block characters that require UTF-8 BOM encoding:
+Now copy the script file. **Change the path** if you saved it somewhere other than Downloads:
+
+```powershell
+Copy-Item "$env:USERPROFILE\Downloads\simple-statusline.ps1" "$env:USERPROFILE\.claude\"
+```
+
+### Step 4: Fix the file so it displays correctly
+
+Copy and paste this command into PowerShell and press Enter:
 
 ```powershell
 $file = "$env:USERPROFILE\.claude\simple-statusline.ps1"
@@ -41,9 +58,11 @@ $content = Get-Content $file -Raw
 [System.IO.File]::WriteAllText($file, $content, [System.Text.UTF8Encoding]::new($true))
 ```
 
-### Step 3: Configure Claude Code
+This fixes the file encoding so the progress bar displays correctly.
 
-Edit or create `%USERPROFILE%\.claude\settings.json` and add the statusline configuration:
+### Step 5: Tell Claude Code to use the statusline
+
+1. Copy this text to your clipboard:
 
 ```json
 {
@@ -54,9 +73,22 @@ Edit or create `%USERPROFILE%\.claude\settings.json` and add the statusline conf
 }
 ```
 
-### Step 4: Restart Claude Code
+2. Open File Explorer and paste this into the address bar, then press Enter:
+   ```
+   %USERPROFILE%\.claude
+   ```
 
-Close and reopen Claude Code to activate the statusline.
+3. Look for a file called `settings.json`:
+   - **If it exists:** Open it with Notepad, and add the `"statusLine"` section to the existing settings
+   - **If it doesn't exist:** Right-click in the folder → New → Text Document, name it `settings.json`, open it with Notepad, and paste the text from step 1
+
+4. Save the file (Ctrl+S) and close Notepad
+
+### Step 6: Restart Claude Code
+
+1. Completely close Claude Code (right-click the icon in your taskbar and click Close, or press Alt+F4)
+2. Open Claude Code again
+3. You should now see the colorful statusline at the bottom
 
 ## Testing
 
