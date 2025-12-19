@@ -1,8 +1,15 @@
 # Claude Code StatusLine for Windows
 
-A PowerShell statusline script for Claude Code that displays context usage with a color-coded progress bar.
+A PowerShell statusline script extension for Claude Code that displays context usage with a color-coded progress bar.
 
 ![Demo](https://img.shields.io/badge/PowerShell-5.1%2B-blue) ![Platform](https://img.shields.io/badge/Platform-Windows-lightgrey)
+
+## Prerequisites
+
+- **Claude Code** — This script extends an existing Claude Code installation. [Install Claude Code](https://claude.com/claude-code) if you haven't already.
+- **Windows 10/11** with PowerShell 5.1+ (pre-installed) or PowerShell Core 7+
+- **Windows Terminal** (recommended for best color support)
+- **Git** (optional, for branch display)
 
 ## Features
 
@@ -12,59 +19,31 @@ A PowerShell statusline script for Claude Code that displays context usage with 
 - **Git branch** — Displays current branch when in a git repository
 - **Working directory** — Shows current path with `~` shorthand for home
 
-## Requirements
-
-- Windows 10/11
-- PowerShell 5.1+ (pre-installed on Windows) or PowerShell Core 7+
-- [Windows Terminal](https://aka.ms/terminal) (recommended for best color support)
-- Git (optional, for branch display)
-
 ## Installation
 
-### Step 1: Create the Claude config directory
-
-Open PowerShell and run:
+### Step 1: Copy the script to Claude's config directory
 
 ```powershell
+# Create the config directory if it doesn't exist
 New-Item -ItemType Directory -Force -Path "$env:USERPROFILE\.claude"
+
+# Copy the script (adjust source path as needed)
+Copy-Item "simple-statusline.ps1" "$env:USERPROFILE\.claude\"
 ```
 
-### Step 2: Download the script
+### Step 2: Fix file encoding
 
-Save `simple-statusline.ps1` to your Claude config folder:
+The script uses Unicode block characters that require UTF-8 BOM encoding:
 
-```powershell
-# If you downloaded the file to Downloads:
-Move-Item "$env:USERPROFILE\Downloads\simple-statusline.ps1" "$env:USERPROFILE\.claude\"
-```
-
-Or copy it directly:
-
-```powershell
-Copy-Item "path\to\simple-statusline.ps1" "$env:USERPROFILE\.claude\"
-```
-
-### Step 3: Fix file encoding (important!)
-
-The script uses Unicode block characters. To ensure they display correctly, save the file with UTF-8 BOM encoding:
-
-**Using PowerShell:**
 ```powershell
 $file = "$env:USERPROFILE\.claude\simple-statusline.ps1"
 $content = Get-Content $file -Raw
 [System.IO.File]::WriteAllText($file, $content, [System.Text.UTF8Encoding]::new($true))
 ```
 
-**Using VS Code:**
-1. Open the file in VS Code
-2. Click "UTF-8" in the bottom-right status bar
-3. Select "Save with Encoding" → "UTF-8 with BOM"
+### Step 3: Configure Claude Code
 
-### Step 4: Configure Claude Code
-
-Add the statusline configuration to your Claude settings file.
-
-**Location:** `%USERPROFILE%\.claude\settings.json`
+Edit or create `%USERPROFILE%\.claude\settings.json` and add the statusline configuration:
 
 ```json
 {
@@ -75,13 +54,9 @@ Add the statusline configuration to your Claude settings file.
 }
 ```
 
-If the file doesn't exist, create it with just the above content.
+### Step 4: Restart Claude Code
 
-If it already exists, add the `statusLine` section to your existing settings.
-
-### Step 5: Restart Claude Code
-
-Close and reopen Claude Code for the changes to take effect.
+Close and reopen Claude Code to activate the statusline.
 
 ## Testing
 
