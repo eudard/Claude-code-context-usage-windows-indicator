@@ -1,4 +1,4 @@
-# Claude Code StatusLine for Windows
+# Claude context progressbar for Windows
 
 A PowerShell statusline script extension for Claude Code that displays context usage with a color-coded progress bar.
 
